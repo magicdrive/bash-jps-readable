@@ -7,7 +7,9 @@ all:
 install:
 	mkdir -p $(PREFIX)/bin/
 	cp -af $(CURRENTDIR)/jps-readable $(PREFIX)/bin/
+	cp -af $(CURRENTDIR)/jpsr $(PREFIX)/bin/
 
 uninstall:
 	rm -f $(PREFIX)/bin/jps-readable
+	rm -f $(PREFIX)/bin/jpsr
 

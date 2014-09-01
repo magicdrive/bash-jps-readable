@@ -1,17 +1,23 @@
 #! /usr/bin/env bash
 
-set -eu
+\set -e
+
+OPTION="$1"
 
 java_pslist() {
-    jps -q | xargs ps
+    if [ "$OPTION" = "-v" ];then
+        \jps -vm
+    else
+        \jps -q | \xargs ps
+    fi
 }
 
 main() {
     java_pslist | grep -v PID\
-            | \perl -pe 's/\s-([DJX]|XX)/\n\t-$1 /g' \
+            | \perl -pe 's/\s-(XX|[DJX])/\n\t-$1 /g' \
             | \perl -pe 's/\s-([a-z0-9\._-])/\n\t-$1 /g' \
             | \perl -pe 's/:/:\n\t\t/g' \
-            | \perl -pe 's/(-(?:[DJX]|XX) [a-z0-9\._-]+) (.++)\n/$1\n\t$2\n/' \
+            | \perl -pe 's/(-(?:XX|[DJX]) [a-z0-9\._-]+) (.++)\n/$1\n\t$2\n/' \
         ;
 }
 
