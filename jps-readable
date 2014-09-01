@@ -1,0 +1,19 @@
+#! /usr/bin/env bash
+
+set -eu
+
+java_pslist() {
+    jps -q | xargs ps
+}
+
+main() {
+    java_pslist | grep -v PID\
+            | \perl -pe 's/\s-([DJX]|XX)/\n\t-$1 /g' \
+            | \perl -pe 's/\s-([a-z0-9\._-])/\n\t-$1 /g' \
+            | \perl -pe 's/:/:\n\t\t/g' \
+            | \perl -pe 's/(-(?:[DJX]|XX) [a-z0-9\._-]+) (.++)\n/$1\n\t$2\n/' \
+        ;
+}
+
+main && exit 1;
+
