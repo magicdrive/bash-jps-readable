@@ -6,7 +6,7 @@ OPTION="$1"
 
 java_pslist() {
     if [ "$OPTION" = "-v" ];then
-        \jps -vm
+        \jps -vml
     else
         \jps -q | \xargs ps
     fi
